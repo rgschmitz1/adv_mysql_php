@@ -12,8 +12,9 @@ $valuelist = array('email',
                    'emaillist',
                    'agree');
 
-echo '<div class="container">';
+echo '<div class="container"><ol>';
 foreach ($valuelist as $key) {
+    echo '<li>';
     if (("$key" == 'agree') && empty($_POST["$key"])) {
         echo '<p class="bg-danger">YOU DO NOT AGREE TO TERMS, <b>NO SOUP FOR YOU!</b></p>';
     } elseif (empty($_POST["$key"])) {
@@ -31,15 +32,16 @@ foreach ($valuelist as $key) {
         if ($_POST['emaillist'] == 'yes') {
             echo '<p>You would like to receive email offers.</p>';
         } else {
-            echo '<p>You <b>DO NOT</b> want to receive email offers (fine then!).</p>';
+            echo '<p>You <b>DO NOT</b> want to receive email offers (fine then!)</p>';
         }
     } elseif ("$key" == 'agree') {
-        echo '<p>You agree to terms and conditions (good, good!).</p>';
+        echo '<p>You agree to terms and conditions (good, good!)</p>';
     } else {
         echo "<p>Your $key is <b>" . $_POST["$key"] . "</b>.</p>";
     }
+    echo '</li>';
 }
-echo '</div>';
+echo '</ol></div>';
 
 include('footer.html');
 ?>
