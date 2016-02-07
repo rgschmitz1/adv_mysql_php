@@ -4,40 +4,40 @@ include('header.html');
 if (!isset($_POST['submit']))
     header('Location: newUser.html');
 
-$valuelist = array('email',
-                   'password',
-                   'city',
-                   'state',
-                   'zip',
-                   'emaillist',
-                   'agree');
+$valuelist = array('Email' => 'email',
+                   'Password' => 'password',
+                   'City' => 'city',
+                   'State' => 'state',
+                   'Zip' => 'zip',
+                   'emaillist' => 'emaillist',
+                   'agree' => 'agree');
 
 echo '<div class="container"><ol>';
-foreach ($valuelist as $key) {
+foreach ($valuelist as $key => $value) {
     echo '<li>';
-    if (("$key" == 'agree') && empty($_POST["$key"])) {
+    if (("$key" == 'agree') && empty($_POST['agree'])) {
         echo '<p class="bg-danger">YOU DO NOT AGREE TO TERMS, <b>NO SOUP FOR YOU!</b></p>';
-    } elseif (empty($_POST["$key"])) {
+    } elseif (empty($_POST["$value"])) {
         echo "<p class='bg-danger'>You forgot to enter in <b>$key</b>.</p>";
-    } elseif ("$key" == 'email') {
+    } elseif ("$key" == 'Email') {
         if ((!preg_match('/\w[\w\._\-&!?=#]*@/', $_POST['email'])) ||
             (!checkdnsrr(preg_replace('/.*@/', '', $_POST['email'])))) {
             echo '<p class="bg-danger">Your email address <b>(' . $_POST['email'] . ')</b> is invalid.</p>';
         } else {
-            echo '<p>Your email address is <b>' . $_POST['email'] . '</b>.</p>';
+            echo '<p>Email: ' . $_POST['email'] . '</p>';
         }
-    } elseif (("$key" == 'zip') && !is_numeric($_POST['zip'])) {
+    } elseif (("$key" == 'Zip') && !is_numeric($_POST['zip'])) {
         echo '<p class="bg-danger">Your zip must be and integer, <b>' . $_POST['zip'] . '</b> is an invalid input.</p>';
     } elseif ("$key" == 'emaillist') {
         if ($_POST['emaillist'] == 'yes') {
-            echo '<p>You would like to receive email offers.</p>';
+            echo '<p>Receive emails</p>';
         } else {
-            echo '<p>You <b>DO NOT</b> want to receive email offers (fine then!)</p>';
+            echo '<p>No emails</p>';
         }
     } elseif ("$key" == 'agree') {
-        echo '<p>You agree to terms and conditions (good, good!)</p>';
+        echo '<p>I agree</p>';
     } else {
-        echo "<p>Your $key is <b>" . $_POST["$key"] . "</b>.</p>";
+        echo "<p>$key: " . $_POST["$value"] . "</p>";
     }
     echo '</li>';
 }
