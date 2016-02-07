@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 </head>
 <body>
-    <form class="container" action="createUser.php" method="post">
+    <form class="container" id="form" onsubmit="return validateForm();" action="createUser.php" method="post">
         <fieldset>
             <legend>New User Form</legend>
             <div class="form-group">
@@ -49,9 +49,9 @@
                     I would NOT like to receive email offers
                 </label>
             </div>
-            <div class="checkbox">
+            <div class="checkbox" id="agreeContainer">
                 <label>
-                    <input type="checkbox" name=agree value="yes">
+                    <input type="checkbox" id="agree" name="agree" value="yes">
                     I agree to the terms and conditions
                 </label>
             </div>
@@ -59,4 +59,6 @@
         </fieldset>
     </form>
 </body>
+<!--Check that the user agrees to terms before continuing-->
+<script type="text/javascript" src="validate.js"></script>
 </html>
