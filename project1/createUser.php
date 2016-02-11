@@ -26,8 +26,8 @@ foreach ($valuelist as $key => $value) {
         } else {
             echo '<p>Email: ' . $_POST['email'] . '</p>';
         }
-    } elseif (("$key" == 'Zip') && !is_numeric($_POST['zip'])) {
-        echo '<p class="bg-danger">Your zip must be and integer, <b>' . $_POST['zip'] . '</b> is an invalid input.</p>';
+    } elseif (("$key" == 'Zip') && (!is_numeric($_POST['zip']) || (strlen($_POST['zip']) != 5))) {
+        echo '<p class="bg-danger">Your zip must be a 5 digit integer, <b>' . $_POST['zip'] . '</b> is an invalid input.</p>';
     } elseif ("$key" == 'emaillist') {
         if ($_POST['emaillist'] == 'yes') {
             echo '<p>Receive emails</p>';
@@ -44,4 +44,3 @@ foreach ($valuelist as $key => $value) {
 echo '</ol></div>';
 
 include('footer.html');
-?>
