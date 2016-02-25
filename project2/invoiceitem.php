@@ -1,10 +1,12 @@
 <?php
 class InvoiceItem {
+    // private instance variables
     private $id;
     private $quantity;
     private $price;
     private $description;
 
+    // magic methods
     public function __set($var, $value) {
         $this->$var = $value;
     }
@@ -14,6 +16,11 @@ class InvoiceItem {
 
     public function calculateItemTotal() {
         $total = $this->__get("quantity") * $this->__get("price");
-        echo $total;
+        return $total;
+    }
+
+    public function display() {
+        return sprintf("Item ID: %s, Quantity: %s, Price: %s, Description: %s, Total Cost: %s<br />",
+            $this->__get("id"), $this->__get("quantity"), $this->__get("price"), $this->__get("description"), $this->calculateItemTotal());
     }
 }
