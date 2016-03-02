@@ -17,9 +17,11 @@ class Invoice {
         return $this->$attr;
     }
 
-    private function calculateInvoice($item) {
+    private function calculateInvoice() {
         //calculate the total cost of all InvoiceItem (i.e. set $total)
-        $this->__set('total', $this->__get('total') + $item->calculateItemTotal());
+        foreach ($this->__get('items') as $item) {
+            $this->__set('total', $this->__get('total') + $item->calculateItemTotal());
+        }
         return $this->__get('total');
     }
 
@@ -27,9 +29,8 @@ class Invoice {
         //loop through each of the invoiceItems and display them
         foreach ($this->__get('items') as $item) {
             echo $item->display();
-            $this->calculateInvoice($item);
         }
         //print the total (call calculateInvoice)
-        echo "Invoice Total: ", $this->__get('total');
+        echo "Invoice Total: ", $this->calculateInvoice();
     }
 }
