@@ -1,5 +1,5 @@
 <?php
-//This class is working
+
 class InvoiceItem {
     // private instance variables
     private $id;
