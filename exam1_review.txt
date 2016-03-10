@@ -1,0 +1,7 @@
+# format of exam is as below
+# exam is 50 pts (5 questions, 10 points per question)
+# form processing
+# magic methods
+# PDO
+# LAMP
+# OO Inheritance
