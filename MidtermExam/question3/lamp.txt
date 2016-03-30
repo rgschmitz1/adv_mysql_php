@@ -1,0 +1,24 @@
+ Answer the following question regarding LAMP configuration:
+
+Q) which 4 pieces of software make up the LAMP stack
+A) Linux, Apache, MySQL, PHP
+
+Q) using apt-get, how would I install the LAMP stack of software
+A) sudo apt-get install apache2
+   sudo apt-get install mysql-server
+   sudo apt-get install php5 libapache2-mod-php5
+
+Q) why can't I create a new file in the /var/www/html directory of a new Ubuntu installation
+A) /var/www/html is owned by the root (admin) user by default
+
+Q) how do I fix it so that I can create a new file (more than 1 correct answer)
+A) Either change the owner of the directory to allow yourself access or change permissions to allow other users read-write access
+
+Q) why do php error messages NOT show up after a new LAMP installation
+A) By default PHP errors are not output to the screen
+
+Q) how do I fix it so that I can see PHP error messages
+   Change php.ini, display_errors = On
+
+Q) how do I restart the web server
+   sudo service apache2 restart
