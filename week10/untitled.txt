@@ -1,0 +1,12 @@
+// CRUD
+Service -> read records
+        -> create records
+        -> delete records
+        -> update records
+
+RESTful (students) -> students.php: HTTP VERB -> POST (create), GET (read), DELETE (delete), PUT (update)
+--------
+read.php
+create.php
+update.php
+delete.php
