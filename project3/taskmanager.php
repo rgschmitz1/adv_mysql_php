@@ -89,6 +89,7 @@ class TaskManager implements ITaskManager {
             echo "what the heck<br />";
             echo $ex->getMessage();
         }
+        return $rowsAffected;
     }
 
     public function delete($id) {
