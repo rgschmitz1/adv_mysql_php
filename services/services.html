@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    </head>
+    <body>
+        <!-- Create form here -->
+        <form action='studentService.php' method='post'>
+            <legend>Create a new student</legend>
+            <input type='text' name='name' value='test value' />
+            <input type='text' name='email' value='test email' />
+            <input type='submit' value='send data to server via HTTP Post' \>
+        </form>
+        <!-- Detete form here -->
+        <hr />
+        Enter the ID to delete: <input type="text" id="idToDelete" />
+        <button id="btnDelete" type="button">Delete</button>
+        <!-- Update form here -->
+        <hr />
+        Enter the ID to update: <input type="text" id="idToUpdate" />
+        <br />
+        Name: <input type="text" id="name" />
+        <br />
+        Email: <input type="text" id="email" />
+        <button id="btnUpdate" type="button">Update</button>
+    </body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        //js -> call studentService.php
+        $("#btnDelete").click(function() {
+            $.ajax("studentService.php", {"data":{"id":$("#idToDelete").val()}, "method":"DELETE"});
+        });
+        $("#btnUpdate").click(function() {
+            $.ajax("studentService.php", {"data":{"id":$("#idToUpdate").val(),
+                                                  "name":$("#name").val(),
+                                                  "email":$("#email").val()}, "method":"PUT"});
+        });
+    })
+</script>
