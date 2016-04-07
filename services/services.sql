@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS `matc`;
+
+USE matc;
+
+CREATE TABLE IF NOT EXISTS `students` (
+    `id` INT AUTO_INCREMENT,
+    `name` VARCHAR(500),
+    `email` VARCHAR(500),
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(`id`)
+);
