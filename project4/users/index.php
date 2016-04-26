@@ -1,12 +1,9 @@
 <?php
 require_once('../header.php');
-//if (!$api->authorizeAdmin())
-//    exit('<div class="container">You must be an administrative user to access this page.</div>');
-
+#if (!$api->authorizeAdmin())
+#    exit('<div class="container">You must be an administrative user to access this page.</div>');
 $query = "SELECT * FROM users";
-$result = $api->dbQuery($query);
-if (!$result)
-    $api->dbError($query);
+$results = $api->dbQuery($query);
 ?>
 
 <div class="container">
@@ -27,17 +24,13 @@ if (!$result)
         <thead>
             <tr>
                 <th>Username</th>
-                <th>Modify</th>
             </tr>
         </thead>
         <tbody>
 
-        <?php while ($record = mysqli_fetch_array($result)) { ?>
+        <?php foreach ($results as $record) { ?>
             <tr>
                 <td><?= $record['username'] ?></td>
-                <td style="padding-top: 0px; padding-bottom: 0px;">
-                    <button type="submit" name="user_id" value="<?= $record['id'] ?>" class="btn btn-default">Edit</button>
-                </td>
             </tr>
         <?php } ?>
 

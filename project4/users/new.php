@@ -12,11 +12,11 @@ if (isset($_POST['submit'])) {
     while (list($key,) = each($list)) {
         $data["$key"] = '';
         $error["$key"] = false;
-        if (isset($_POST["$key"]) && !empty($_POST["$key"])) {
-            $data["$key"] = $api->dbInputCheck($_POST["$key"]);
-        } else {
+        if (!isset($_POST["$key"]) || empty($_POST["$key"])) {
             $error_msg = 'All fields must be filled in, try again.';
             $error["$key"] = true;
+        } else {
+            $data["$key"] = $_POST["$key"];
         }
     }
     // Check that password and confirmation password match
@@ -27,13 +27,9 @@ if (isset($_POST['submit'])) {
     }
     // Check for duplicate username exists in database
     if (empty($error_msg)) {
-        $query = "SELECT id FROM users WHERE username = '" . $data['username'] . "'";
-        $duplicate_username_results = $api->dbQuery($query);
-        if (!$duplicate_username_results) {
-            $api->dbError($query);
-        }
+        $duplicate_username_results = $api->dbCheckDuplicateUser($data['username']);
 
-        if (count(mysqli_fetch_array($duplicate_username_results)) > 0) {
+        if ($duplicate_username_results > 0) {
             $error_msg = 'Username <b>' . $data['username'] . '</b> already exists in database.';
             $data['username'] = '';
             $error['username'] = true;
@@ -43,11 +39,9 @@ if (isset($_POST['submit'])) {
     if (empty($error_msg)) {
         $username = $data['username'];
         $password = sha1($data['password']);
-        $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
-        $result = $api->dbQuery($query);
-        if (!$result) {
-            echo $query;
+        $result = $api->dbCreateUser($username, $password);
+        if ($result = 0) {
             $api->dbError();
         } else {
             $api->dbClose();
@@ -90,7 +84,7 @@ if (!empty($error_msg)) {
                 echo "<input type='password' class='form-control' name='$key' id='$key' placeholder='$value'>";
             } else {
                 ?>
-                <input type='text' class='form-control' name='<?= $key ?>' id='<?= $key ?>' value='<?php if (isset($data["$key"])) { echo $data["$key"]; } ?>' placeholder='<?= $value ?>'>
+                <input type='text' class='form-control' name='<?= $key ?>' id='<?= $key ?>' <?php if (!empty($data["$key"])) { echo "value='" . $data["$key"] . "'" ; } ?> placeholder='<?= $value ?>'>
                 <?php
             }
             // If error is present with input, display error icon in input box

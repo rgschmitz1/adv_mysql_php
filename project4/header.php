@@ -1,7 +1,7 @@
 <?php
 require_once('appvars.php');
-require_once('api.php');
-$api = new Api();
+require_once('users/usermanager.php');
+$api = new UserManager();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

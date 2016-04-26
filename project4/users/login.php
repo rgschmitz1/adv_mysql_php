@@ -7,23 +7,23 @@ $error_msg = '';
 // If the user isn't logged in, try to log them in
 if (!isset($_SESSION['id']) && isset($_POST['submit'])) {
     // grab username and password from user
-    $user_username = $api->dbInputCheck($_POST['username']);
-    $user_password = $api->dbInputCheck($_POST['password']);
+    $user_username = $_POST['username'];
+    $user_password = sha1($_POST['password']);
 
     if (empty($user_username) || empty($user_password)) {
         $error_msg = 'You must enter a valid username and password to login.';
     } else {
         // lookup user from the database
-        $query = "SELECT id FROM users WHERE username = '$user_username' AND password = '" . sha1($user_password) ."'";
-        $data = $api->dbQuery($query);
+        $data = $api->dbUserLogin($user_username, $user_password);
 
-        if (mysqli_num_rows($data) == 0) {
+        if (count($data) == 0) {
             $error_msg = 'Invalid username or password entered, try again.';
-        } elseif (mysqli_num_rows($data) == 1) {
+        } elseif (count($data) == 1) {
             // Login is OK, set the SESSION username and id, then redirect to homepage
-            $row = mysqli_fetch_array($data);
             $_SESSION['username'] = $user_username;
-            $_SESSION['id'] = $row['id'];
+            foreach ($data as $value) {
+                $_SESSION['id'] = $value['id'];
+            }
             $api->dbClose();
             header('Location: ' . SITE_ROOT);
         } else {
