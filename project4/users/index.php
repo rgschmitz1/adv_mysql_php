@@ -1,9 +1,6 @@
 <?php
 require_once('../header.php');
-#if (!$api->authorizeAdmin())
-#    exit('<div class="container">You must be an administrative user to access this page.</div>');
-$query = "SELECT * FROM users";
-$results = $api->dbQuery($query);
+$results = $api->dbQueryUsers();
 ?>
 
 <div class="container">
@@ -15,7 +12,7 @@ $results = $api->dbQuery($query);
     </div>
     <?php } ?>
 
-    <h2>User Management</h2>
+    <h2>User Request</h2>
     <p><a href="new.php">Add New User</a></p>
 
     <!-- Start modify form -->
@@ -24,13 +21,24 @@ $results = $api->dbQuery($query);
         <thead>
             <tr>
                 <th>Username</th>
+                <th>create</th>
+                <th>read</th>
+                <th>readAll</th>
+                <th>update</th>
+                <th>delete</th>
             </tr>
         </thead>
         <tbody>
 
         <?php foreach ($results as $record) { ?>
             <tr>
-                <td><?= $record['username'] ?></td>
+                <?php $username = $record['username']; ?>
+                <td><?= $username ?></td>
+                <td><?php echo $api->dbCheckTransactions($username, 1); ?></td>
+                <td><?php echo $api->dbCheckTransactions($username, 2); ?></td>
+                <td><?php echo $api->dbCheckTransactions($username, 3); ?></td>
+                <td><?php echo $api->dbCheckTransactions($username, 4); ?></td>
+                <td><?php echo $api->dbCheckTransactions($username, 5); ?></td>
             </tr>
         <?php } ?>
 

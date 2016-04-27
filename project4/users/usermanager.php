@@ -4,9 +4,6 @@ class UserManager {
     const DB_USER = 'root';
     const DB_PASSWORD = '';
 
-    // Administrative user(s)
-    const ADMIN_ID = '1';
-
     // Set database connect variable
     private function dbConnect() {
         $dbc = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD)
@@ -14,6 +11,22 @@ class UserManager {
         return $dbc;
     }
 
+    // Check for duplicate user
+    function dbCheckTransactions($username, $request) {
+        $dbc = $this->dbConnect();
+        $dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "SELECT request FROM transactions WHERE username=:username AND request=:request";
+        try {
+            $sql = $dbc->prepare($query);
+            $sql->bindParam(":username", $username);
+            $sql->bindParam(":request", $request);
+            $sql->execute();
+            return $sql->rowCount();
+        } catch(Exception $ex) {
+            echo "what the heck<br />";
+            echo $ex->getMessage();
+        }
+    }
     // Check for duplicate user
     function dbUserLogin($username, $password) {
         $dbc = $this->dbConnect();
@@ -63,9 +76,10 @@ class UserManager {
         }
     }
     // Query database
-    function dbQuery($query) {
+    function dbQueryUsers() {
         $dbc = $this->dbConnect();
         $dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "SELECT * FROM users";
         try {
             $sql = $dbc->prepare($query);
             $sql->execute();
