@@ -9,17 +9,28 @@ require_once('itaskmanager.php');
 
 class TaskManager implements ITaskManager {
     // Define database connection constants
-    const DB_HOST = 'localhost';
     const DB_USER = 'root';
     const DB_PASSWORD = '';
-    const DB_NAME = 'project4';
 
     private $id;
     private $description;
 
+    private function createLog($request) {
+        if (!isset($_SESSION))
+            session_start();
+        if (!empty($_SESSION['username'])) {
+            $db = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD);
+            $sql = "INSERT INTO transactions(`username`, `request`) VALUES('" . $_SESSION['username'] . "', :request)";
+            $query = $db->prepare($sql);
+            $query->bindParam(":request", $request);
+            $query->execute();
+        }
+    }
+
     //given a description, create a new record in the database
     public function create($desc) {
-        $db = new PDO('mysql:host='self::DB_HOST';dbname='self::DB_NAME, self::DB_USER, self::DB_PASSWORD); //server, database, credentials
+        $this->createLog(1);
+        $db = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO tasks(`description`) VALUES(:description)";
         try {
@@ -34,7 +45,8 @@ class TaskManager implements ITaskManager {
     }
 
     public function read($id) {
-        $db = new PDO('mysql:host='self::DB_HOST';dbname='self::DB_NAME, self::DB_USER, self::DB_PASSWORD); //server, database, credentials
+        $this->createLog(2);
+        $db = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM tasks WHERE id = :id";
         try {
@@ -58,7 +70,8 @@ class TaskManager implements ITaskManager {
     }
 
     public function readAll() {
-        $db = new PDO('mysql:host='self::DB_HOST';dbname='self::DB_NAME, self::DB_USER, self::DB_PASSWORD); //server, database, credentials
+        $this->createLog(3);
+        $db = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM tasks";
         try {
@@ -82,7 +95,8 @@ class TaskManager implements ITaskManager {
 
     //this method is not finished
     public function update($id, $newDesc) {
-        $db = new PDO('mysql:host='self::DB_HOST';dbname='self::DB_NAME, self::DB_USER, self::DB_PASSWORD); //server, database, credentials
+        $this->createLog(4);
+        $db = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "UPDATE tasks SET description = :newDesc WHERE id=:id";
         try {
@@ -99,7 +113,8 @@ class TaskManager implements ITaskManager {
     }
 
     public function delete($id) {
-        $db = new PDO('mysql:host='self::DB_HOST';dbname='self::DB_NAME, self::DB_USER, self::DB_PASSWORD); //server, database, credentials
+        $this->createLog(5);
+        $db = new PDO('mysql:host=localhost;dbname=project4', self::DB_USER, self::DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "DELETE FROM tasks WHERE id=:id";
         try {
