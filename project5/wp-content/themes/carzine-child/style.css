@@ -1,0 +1,18 @@
+/*
+Theme Name: CarZine Child
+Theme URI: http://takimi.info/carzine/
+Author: Takimi
+Author URI: http://takimithemes.com
+Description: CarZine is an HTML5 and CSS3 Responsive WordPress theme based on Twitter Bootstrap. It is equipped with a nice and simple theme options panel.You can use Carzine, to present new and used cars, motorbikes and motorcycles.It is an ideal WordPress theme for websites that are dedicated to car dealership, car review, showcase or car blogging website. You have the ability to set your logo and your favicon easily, plus many other options.
+Version: 1.3.1
+Template: carzine
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: black, two-columns, right-sidebar, responsive-layout, custom-header, custom-menu, theme-options,editor-style,translation-ready
+TextDomain: carzine
+*/
+body{
+ font-family:'Open Sans Regular',sans-serif,Helvetica;
+ font-size:16px;
+ color:#ffffff;
+}
