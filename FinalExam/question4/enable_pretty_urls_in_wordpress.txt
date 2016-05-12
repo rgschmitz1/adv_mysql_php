@@ -1,0 +1,11 @@
+#1 enable mod_rewrite in apache2 using the following command
+a2enmod rewrite
+
+#2 change apache2.conf to 'AllowOverride All' under the <Directory> section for the site
+
+#3 restart the apache2 server
+service apache2 restart
+
+#4 In the Settings -> Permalinks panel of the wp-admin page, you can choose one of the more common permalink structures or enter your own
+
+#5 create an .htaccess file in the wordpress site root directory with the output that the wordpress wp-admin page provides
